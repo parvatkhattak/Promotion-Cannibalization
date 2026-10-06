@@ -12,7 +12,7 @@
   --pink: #ff6bb0;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-snap-type: y proximity; font-size: clamp(14px, .5vw + 11px, 21px); }
+html { scroll-behavior: smooth; font-size: clamp(14px, .5vw + 11px, 21px); }
 body {
   font-family: 'Outfit', system-ui, sans-serif;
   background: var(--bg); color: var(--text); line-height: 1.55;
@@ -50,7 +50,7 @@ button, select, input { font: inherit; }
 
 /* ── scene frame ── */
 .scene {
-  min-height: 100vh; min-height: 100svh; width: 100%; scroll-snap-align: start;
+  min-height: 100vh; min-height: 100svh; width: 100%;
   display: flex; align-items: center; justify-content: center;
   padding: clamp(4rem, 9vh, 6rem) clamp(2.4rem, 6vw, 7rem) clamp(2.5rem, 6vh, 4rem);
   position: relative;

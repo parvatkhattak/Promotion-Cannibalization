@@ -59,18 +59,15 @@ export default function App() {
     return () => removeEventListener('scroll', onScroll)
   }, [])
 
-  // presenter keyboard controls
+  // presenter keyboard controls (ArrowRight / ArrowLeft for next/prev)
   useEffect(() => {
     const onKey = (e) => {
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return
-      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) {
-        e.preventDefault()
+      if (e.key === 'ArrowRight') {
         go(cur + 1)
-      } else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) {
-        e.preventDefault()
+      } else if (e.key === 'ArrowLeft') {
         go(cur - 1)
-      } else if (e.key === 'Home') go(0)
-      else if (e.key === 'End') go(scenes.length - 1)
+      }
     }
     addEventListener('keydown', onKey)
     return () => removeEventListener('keydown', onKey)
