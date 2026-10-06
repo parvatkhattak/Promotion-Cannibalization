@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="progress"></div>
+  <div class="bg" aria-hidden="true">
+    <div class="grid-bg"></div>
+    <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  </div>
   <nav>
     <a href="#problem">Problem</a>
     <a href="#illustration">Illustration</a>
@@ -21,6 +26,12 @@
     <span class="badge">CPG · Promotion Analytics</span>
     <h1>Promotion Cannibalization</h1>
     <p>Did the promotion create new demand, or just move existing sales from one of our own products to another?</p>
+    <div class="hero-stats">
+      <div class="stat"><b>₹<span data-count="10">10</span> Cr</b><span>apparent uplift</span></div>
+      <div class="stat"><b>−₹<span data-count="6">6</span> Cr</b><span>switched from own SKUs</span></div>
+      <div class="stat"><b>₹<span data-count="4">4</span> Cr</b><span>true incremental</span></div>
+    </div>
+    <span class="scroll-cue" aria-hidden="true"></span>
   </header>
 
   <main class="wrap">
@@ -60,11 +71,11 @@
     <section id="illustration" class="reveal">
       <h2>Illustration</h2>
       <p class="sub">Illustrative numbers only, to show how apparent uplift can mislead.</p>
-      <div class="card bar-box" style="--accent: var(--b)">
+      <div class="card chart" style="--i:0">
         <h3>Promoted SKU vs. rest of portfolio</h3>
-        <div class="bar-row"><span class="l">Promoted SKU</span><div class="bar up" data-w="100%"></div><b>+₹10 Cr (apparent uplift)</b></div>
-        <div class="bar-row"><span class="l">Other SKUs</span><div class="bar down" data-w="60%"></div><b>−₹6 Cr (switching)</b></div>
-        <div class="bar-row"><span class="l">True incremental</span><div class="bar net" data-w="40%"></div><b>+₹4 Cr</b></div>
+        <div class="bar-row"><span class="l">Promoted SKU</span><div class="track"><div class="bar up" data-w="100%"></div></div><b>+₹10 Cr (apparent uplift)</b></div>
+        <div class="bar-row"><span class="l">Other SKUs</span><div class="track"><div class="bar down" data-w="60%"></div></div><b>−₹6 Cr (switching)</b></div>
+        <div class="bar-row"><span class="l">True incremental</span><div class="track"><div class="bar net" data-w="40%"></div></div><b>+₹4 Cr</b></div>
       </div>
       <div class="callout"><strong>Takeaway:</strong> Looking only at the promoted SKU reports ₹10Cr. Looking at the whole portfolio, and at margin, the real value may be far lower, or even negative.</div>
     </section>
@@ -98,10 +109,10 @@
       <h2>Solution Direction</h2>
       <p class="sub">A data-driven promotion effectiveness framework.</p>
       <div class="steps">
-        <div class="step"><div><h3>Analyze historical data</h3><p>Sales, pricing, promotions and SKU-level relationships.</p></div></div>
-        <div class="step"><div><h3>Detect shifting demand</h3><p>Identify when and where promotions move sales between products rather than generate true incremental demand.</p></div></div>
-        <div class="step"><div><h3>Combine predictive analytics with substitution insights</h3><p>Estimate the true incremental impact of a promotion.</p></div></div>
-        <div class="step"><div><h3>Support better decisions</h3><p>Guide which SKUs to promote, where and when.</p></div></div>
+        <div class="step"><span class="n">1</span><div><h3>Analyze historical data</h3><p>Sales, pricing, promotions and SKU-level relationships.</p></div></div>
+        <div class="step"><span class="n">2</span><div><h3>Detect shifting demand</h3><p>Identify when and where promotions move sales between products rather than generate true incremental demand.</p></div></div>
+        <div class="step"><span class="n">3</span><div><h3>Combine predictive analytics with substitution insights</h3><p>Estimate the true incremental impact of a promotion.</p></div></div>
+        <div class="step"><span class="n">4</span><div><h3>Support better decisions</h3><p>Guide which SKUs to promote, where and when.</p></div></div>
       </div>
       <div class="quote">
         <span class="from">Which promotions increased sales?</span>
@@ -113,14 +124,54 @@
   <footer>Promotion Cannibalization · Problem Statement</footer>
 
   <script>
+    // stagger index for children
+    document.querySelectorAll('.reveal').forEach(sec => {
+      sec.querySelectorAll('.card, .step, .quote, .callout').forEach((el, i) => el.style.setProperty('--i', i));
+    });
+
+    // reveal on scroll + animate bars
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
         e.target.classList.add('show');
-        e.target.querySelectorAll('.bar').forEach(b => b.style.width = b.dataset.w);
+        e.target.querySelectorAll('.bar').forEach(b => setTimeout(() => b.style.width = b.dataset.w, 400));
+        io.unobserve(e.target);
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // count-up numbers in hero
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const end = +el.dataset.count, dur = 1600, t0 = performance.now();
+      const tick = t => {
+        const p = Math.min((t - t0) / dur, 1);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      el.textContent = 0;
+      requestAnimationFrame(tick);
+    });
+
+    // scroll progress + active nav link
+    const bar = document.getElementById('progress');
+    const links = [...document.querySelectorAll('nav a')];
+    const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+    addEventListener('scroll', () => {
+      const h = document.documentElement;
+      bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+      let cur = -1;
+      secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.4) cur = i; });
+      links.forEach((a, i) => a.classList.toggle('active', i === cur));
+    }, { passive: true });
+
+    // cursor-follow glow on cards
+    document.querySelectorAll('.card').forEach(c => {
+      c.addEventListener('mousemove', e => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
   </script>
 </body>
 </html>
