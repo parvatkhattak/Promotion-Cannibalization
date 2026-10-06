@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Promotion Cannibalization – Problem Statement</title>
+  <meta name="description" content="Understand promotion cannibalization: why a sales uplift on a promoted SKU may not be true incremental demand, its business impact, and the proposed solution direction.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="#problem">Problem</a>
+    <a href="#illustration">Illustration</a>
+    <a href="#relevance">Business Relevance</a>
+    <a href="#solution">Solution Direction</a>
+  </nav>
+
+  <header class="hero wrap">
+    <span class="badge">CPG · Promotion Analytics</span>
+    <h1>Promotion Cannibalization</h1>
+    <p>Did the promotion create new demand, or just move existing sales from one of our own products to another?</p>
+  </header>
+
+  <main class="wrap">
+    <section id="problem" class="reveal">
+      <h2>The Problem Statement</h2>
+      <p class="sub">Four questions that frame the challenge.</p>
+      <div class="grid">
+        <article class="card q1">
+          <div class="num">1</div>
+          <h3>What is happening?</h3>
+          <p>During major promotions, sales of a promoted SKU increase significantly, but sales of other SKUs within the same brand/category decline at the same time. The business cannot reliably distinguish genuine incremental demand from customers simply switching between its own products.</p>
+        </article>
+        <article class="card q2">
+          <div class="num">2</div>
+          <h3>What is impacted?</h3>
+          <ul>
+            <li>Promotion ROI</li>
+            <li>Brand revenue</li>
+            <li>SKU mix</li>
+            <li>Retailer margins</li>
+            <li>Decisions on which products to promote</li>
+          </ul>
+        </article>
+        <article class="card q3">
+          <div class="num">3</div>
+          <h3>Why is it a challenge?</h3>
+          <p>Promotion performance is typically evaluated using SKU-level sales uplift, while substitution between pack sizes, variants, and competing SKUs is difficult to attribute across retailers, regions and channels.</p>
+        </article>
+        <article class="card q4">
+          <div class="num">4</div>
+          <h3>Why is it important?</h3>
+          <p>A promotion that appears to generate ₹10Cr in incremental sales could actually be shifting a substantial portion of existing demand from higher-margin products. Misjudging this can lead to millions of rupees being spent on ineffective promotions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="illustration" class="reveal">
+      <h2>Illustration</h2>
+      <p class="sub">Illustrative numbers only, to show how apparent uplift can mislead.</p>
+      <div class="card bar-box" style="--accent: var(--b)">
+        <h3>Promoted SKU vs. rest of portfolio</h3>
+        <div class="bar-row"><span class="l">Promoted SKU</span><div class="bar up" data-w="100%"></div><b>+₹10 Cr (apparent uplift)</b></div>
+        <div class="bar-row"><span class="l">Other SKUs</span><div class="bar down" data-w="60%"></div><b>−₹6 Cr (switching)</b></div>
+        <div class="bar-row"><span class="l">True incremental</span><div class="bar net" data-w="40%"></div><b>+₹4 Cr</b></div>
+      </div>
+      <div class="callout"><strong>Takeaway:</strong> Looking only at the promoted SKU reports ₹10Cr. Looking at the whole portfolio, and at margin, the real value may be far lower, or even negative.</div>
+    </section>
+
+    <section id="relevance" class="reveal">
+      <h2>Business Relevance</h2>
+      <p class="sub">Why this matters at scale.</p>
+      <div class="grid">
+        <article class="card q1">
+          <h3>Promotions drive CPG sales</h3>
+          <p>An increase in promoted SKU sales doesn't necessarily mean incremental revenue for the brand. If consumers simply switch from other SKUs in the same portfolio, the company shifts existing demand rather than creating new demand.</p>
+        </article>
+        <article class="card q3">
+          <h3>Consequences</h3>
+          <ul>
+            <li>Misleading promotion ROI</li>
+            <li>Reduced margins</li>
+            <li>Inefficient marketing spend</li>
+            <li>Poor decisions on what to promote</li>
+          </ul>
+        </article>
+        <article class="card q4">
+          <h3>Leakage at scale</h3>
+          <p>Even a small degree of cannibalization across high-volume promotions can translate into significant revenue and margin leakage.</p>
+        </article>
+      </div>
+      <div class="callout"><strong>The core question:</strong> Is a promotion truly creating incremental sales, or simply moving sales from one SKU to another?</div>
+    </section>
+
+    <section id="solution" class="reveal">
+      <h2>Solution Direction</h2>
+      <p class="sub">A data-driven promotion effectiveness framework.</p>
+      <div class="steps">
+        <div class="step"><div><h3>Analyze historical data</h3><p>Sales, pricing, promotions and SKU-level relationships.</p></div></div>
+        <div class="step"><div><h3>Detect shifting demand</h3><p>Identify when and where promotions move sales between products rather than generate true incremental demand.</p></div></div>
+        <div class="step"><div><h3>Combine predictive analytics with substitution insights</h3><p>Estimate the true incremental impact of a promotion.</p></div></div>
+        <div class="step"><div><h3>Support better decisions</h3><p>Guide which SKUs to promote, where and when.</p></div></div>
+      </div>
+      <div class="quote">
+        <span class="from">Which promotions increased sales?</span>
+        <span class="to">Which promotions actually created additional value for the business?</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>Promotion Cannibalization · Problem Statement</footer>
+
+  <script>
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('show');
+        e.target.querySelectorAll('.bar').forEach(b => b.style.width = b.dataset.w);
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
