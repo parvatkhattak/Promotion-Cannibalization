@@ -101,12 +101,3 @@ Suggested repo layout: `analysis/` (notebooks), `src/truelift/` (python package)
 | No cost/margin data | Assumed margin %, shown as an assumption in the UI |
 | Causal claims overreach | Frame as "estimated" with validation on synthetic truth |
 | Time | Core = phases 1–5 on one or two categories (e.g., pasta + sauce); extend later |
-
----
-
-## 6. Decisions I need from you
-
-1. **Timeline / deadline** for the next jury round (decides how much of phases 5–7 we do)?
-2. **Scope:** all 4 categories, or start with **1–2 (pasta + pasta sauce)**? *(I recommend starting with 1–2.)*
-3. **Integration style:** precomputed JSON feeding the React site *(simplest, recommended)* vs a live FastAPI backend?
-4. **Repo layout:** OK to add `analysis/` and `src/truelift/` at the repo root?
