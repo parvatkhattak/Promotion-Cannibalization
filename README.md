@@ -2,7 +2,7 @@
 
 > *“Not every sale is a new sale.”*
 
-A data-driven framework and interactive presentation exploring CPG promotion effectiveness — distinguishing genuine incremental demand from portfolio cannibalization and brand-switching.
+A data driven framework and interactive presentation exploring CPG promotion effectiveness — distinguishing genuine incremental demand from portfolio cannibalization and brand-switching.
 
 ---
 
